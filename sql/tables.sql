@@ -11,7 +11,16 @@ CREATE TABLE `users` (
   `is_mail_activated` BOOLEAN DEFAULT FALSE,
   `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO users (name, mail) VALUES ("asd", "dsa");
+
+CREATE TABLE `users_tokens` (
+  `user_id` int PRIMARY KEY NOT NULL,
+  `refreshToken` varchar(255) DEFAULT NULL,
+  
+  FOREIGN KEY (user_id) REFERENCES users (id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+);
+
 CREATE TABLE `habits` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -24,7 +33,7 @@ CREATE TABLE `habits` (
   `value` int DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
   `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP
-   FOREIGN KEY (user_id) REFERENCES users (id)
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
