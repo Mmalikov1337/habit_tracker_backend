@@ -39,7 +39,18 @@ class Database {
 			]);
 			return a[0].insertId;
 		} catch (e) {
-			throw new ApiError(400, "Error in Database");
+			throw new ApiError(500, "Error in Database, addUser");
+		}
+	}
+
+	async getUserByMailAndPasword(email: string, password: string): Promise<UserDTO> {
+		try {
+			const [userData]: [mysql.RowDataPacket[], any] = await (
+				await this.conn
+			).query("SELECT * FROM users WHERE mail=? and password=?", [email, password]);
+			return new UserDTO(userData[0]);
+		} catch (e) {
+			throw new ApiError(500, "Error in Database, getUserByMailAndPasword");
 		}
 	}
 
@@ -57,17 +68,19 @@ class Database {
 		try {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
-			).query("SELECT * FROM users_tokens WHERE user_id=?", [userId]);
+			).query("SELECT * FROM users_tokens WHERE user_id=?", [userId]); //получение токена по id юзера
 
 			if (rows[0]) {
 				// Если запись уже есть
+				// console.log("SAVE TOKEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", userId);
+
 				const a: any = await (
 					await this.conn
 				).execute("UPDATE users_tokens SET refreshToken=? WHERE user_id=?", [
+					//обновление токена
 					refreshToken,
 					userId,
 				]);
-
 				return a[0].insertId;
 			}
 

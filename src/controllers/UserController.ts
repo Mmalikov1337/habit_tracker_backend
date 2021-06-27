@@ -19,6 +19,22 @@ class UserController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
+	async login(req: Request, res: Response, next: NextFunction) {
+		const { email, password } = req.body;
+
+		try {
+			const userData = await userService.loginUser(email, password);
+
+			res.cookie("refreshToken", userData.refresh, {
+				maxAge: 30 * 24 * 60 * 60 * 1000,
+				httpOnly: true,
+			});
+
+			return res.status(201).json(userData);
+		} catch (e) {
+			return next(ApiError.badRequest(e.message));
+		}
+	}
 }
 
 export default new UserController();
