@@ -12,4 +12,6 @@ auth.post("/register", UserController.register);
 
 auth.post("/login", UserController.login);
 
+auth.post("/refresh", UserController.refreshTokens);
+
 export default auth;

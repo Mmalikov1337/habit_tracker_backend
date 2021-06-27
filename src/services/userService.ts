@@ -1,7 +1,7 @@
 import db from "../Database";
 import ApiError from "../errors/ApiError";
 import tokenService from "./tokenService";
-
+import TokenPayloadDTO from "./../DTO/TokenPayloadDTO";
 interface IregisterUser {
 	access: string;
 	refresh: string;
@@ -21,9 +21,7 @@ class UserService {
 				throw ApiError.badRequest(`User with email (${email}) already exists`);
 			}
 			const userId = await db.addUser(email, username, password, bio);
-			const payload = {
-				id: userId,
-			};
+			const payload = new TokenPayloadDTO(userId).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			await db.saveToken(userId, tokens.refresh);
 			return { ...tokens, userId };
@@ -36,13 +34,11 @@ class UserService {
 			const user = await db.getUserByMailAndPasword(email, password);
 			if (!user) {
 				throw ApiError.badRequest("Failed to login");
-			}			
+			}
 			if (!user.id) {
 				throw ApiError.badRequest("User must have id");
 			}
-			const payload = {
-				id: user.id,
-			};
+			const payload = new TokenPayloadDTO(Number(user.id)).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			db.saveToken(Number(user.id), tokens.refresh);
 			return { ...tokens, userId: user.id };

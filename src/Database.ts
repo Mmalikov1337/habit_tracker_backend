@@ -72,8 +72,6 @@ class Database {
 
 			if (rows[0]) {
 				// Если запись уже есть
-				// console.log("SAVE TOKEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", userId);
-
 				const a: any = await (
 					await this.conn
 				).execute("UPDATE users_tokens SET refreshToken=? WHERE user_id=?", [
@@ -90,13 +88,26 @@ class Database {
 				userId,
 				refreshToken,
 			]);
-
 			return a[0].insertId;
 		} catch (e) {
 			return -1;
 		}
 	}
-
+	async findRefreshToken(refreshToken: string) {
+		try {
+			const [rows]: [mysql.RowDataPacket[], any] = await (
+				await this.conn
+			).query("SELECT * FROM users_tokens WHERE refreshToken=?", [refreshToken]);
+			// console.log(
+			// 	">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=",
+			// 	rows
+			// );
+			return rows[0]
+		} catch (e) {
+			console.log("db findRefreshToken");
+			
+		}
+	}
 	async executeAnyCommand(command: string, args: Array<any>) {
 		console.log(arguments);
 		(await this.conn).execute(command, args);
