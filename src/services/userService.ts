@@ -30,6 +30,7 @@ class UserService {
 			throw e;
 		}
 	}
+
 	async logoutUser(refreshToken: string) {
 		try {
 			if (!refreshToken) {
@@ -44,6 +45,7 @@ class UserService {
 			throw e;
 		}
 	}
+	
 	async loginUser(email: string, password: string) {
 		try {
 			const user = await db.getUserByMailAndPasword(email, password);

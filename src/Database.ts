@@ -93,6 +93,7 @@ class Database {
 			return -1;
 		}
 	}
+
 	async findRefreshToken(refreshToken: string) {
 		try {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
@@ -104,6 +105,7 @@ class Database {
 			throw e;
 		}
 	}
+
 	async deleteRefreshToken(refreshToken: string) {
 		try {
 			await (
@@ -114,9 +116,12 @@ class Database {
 			throw e;
 		}
 	}
+	
 	async executeAnyCommand(command: string, args: Array<any>) {
-		console.log(arguments);
-		(await this.conn).execute(command, args);
+		// console.log(arguments);
+		const [a] = await(await this.conn).execute(command, args);
+		// console.log("ADDAASDASDASDASDASD", a, "___");
+		
 	}
 }
 

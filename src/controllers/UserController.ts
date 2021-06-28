@@ -19,6 +19,7 @@ class UserController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
+	
 	async login(req: Request, res: Response, next: NextFunction) {
 		const { email, password } = req.body;
 		try {
@@ -32,6 +33,7 @@ class UserController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
+
 	async logout(req: Request, res: Response, next: NextFunction) {
 		try {
 			const refreshToken = req.cookies.refreshToken;
@@ -41,6 +43,7 @@ class UserController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
+
 	async refreshTokens(req: Request, res: Response, next: NextFunction) {
 		try {
 			const refreshToken = req.cookies.refreshToken;

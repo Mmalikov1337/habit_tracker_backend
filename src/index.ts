@@ -1,5 +1,6 @@
 import express from "express";
-import authRouter from "./authRouter";
+import authRouter from "./routers/authRouter";
+import test from "./routers/test";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorHandler";
@@ -9,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", authRouter);
+app.use("/test", test);
 app.use(errorHandler);
 
 const PORT = process.env.PORT ?? 5000;

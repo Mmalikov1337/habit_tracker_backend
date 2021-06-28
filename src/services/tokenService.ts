@@ -11,7 +11,7 @@ interface IgenerateTokens {
 	refresh: string;
 }
 
-interface IverifyFerfeshToken {
+interface IverifyToken {
 	id: number;
 	iat: number;
 	exp: number;
@@ -33,17 +33,26 @@ class TokenService {
 		}
 	}
 
-	verifyFerfeshToken(token: string): IverifyFerfeshToken | null {
+	verifyFerfeshToken(token: string): IverifyToken | null {
 		try {
 			const userData = jwt.verify(token, process.env.REFRESH_TOKEN_KEY as string);
 			console.log(userData);
-			return userData as IverifyFerfeshToken;
-			// return new TokenPayloadDTO(Number(userData.id));
+			return userData as IverifyToken;
 		} catch (e) {
-			console.log(e.message, e.name, e.name == "TokenExpiredError");
 			return null;
 		}
 	}
+	
+	verifyAccessToken(token: string): IverifyToken | null {
+		try {
+			const userData = jwt.verify(token, process.env.ACCESS_TOKEN_KEY as string);
+			console.log(userData);
+			return userData as IverifyToken;
+		} catch (e) {
+			return null;
+		}
+	}
+
 	async findRefreshToken(refreshToken: string) {
 		return await db.findRefreshToken(refreshToken);
 	}
