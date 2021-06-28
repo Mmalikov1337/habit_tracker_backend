@@ -98,14 +98,20 @@ class Database {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query("SELECT * FROM users_tokens WHERE refreshToken=?", [refreshToken]);
-			// console.log(
-			// 	">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=",
-			// 	rows
-			// );
-			return rows[0]
+			return rows[0];
 		} catch (e) {
 			console.log("db findRefreshToken");
-			
+			throw e;
+		}
+	}
+	async deleteRefreshToken(refreshToken: string) {
+		try {
+			await (
+				await this.conn
+			).execute("DELETE FROM users_tokens WHERE refreshToken=?", [refreshToken]);
+		} catch (e) {
+			console.log("db deleteRefreshToken");
+			throw e;
 		}
 	}
 	async executeAnyCommand(command: string, args: Array<any>) {

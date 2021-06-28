@@ -8,15 +8,12 @@ import db from "./../Database";
 class UserController {
 	async register(req: Request, res: Response, next: NextFunction) {
 		const { email, username, password, bio } = req.body;
-
 		try {
 			const userData = await userService.registerUser(email, username, password, bio);
-
 			res.cookie("refreshToken", userData.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
-
 			return res.status(201).json(userData);
 		} catch (e) {
 			return next(ApiError.badRequest(e.message));
@@ -24,32 +21,35 @@ class UserController {
 	}
 	async login(req: Request, res: Response, next: NextFunction) {
 		const { email, password } = req.body;
-
 		try {
 			const userData = await userService.loginUser(email, password);
-
 			res.cookie("refreshToken", userData.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
-
 			return res.status(201).json(userData);
 		} catch (e) {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
-
+	async logout(req: Request, res: Response, next: NextFunction) {
+		try {
+			const refreshToken = req.cookies.refreshToken;
+			await userService.logoutUser(refreshToken);
+			return res.status(201).json({ message: "logged out" });
+		} catch (e) {
+			return next(ApiError.badRequest(e.message));
+		}
+	}
 	async refreshTokens(req: Request, res: Response, next: NextFunction) {
 		try {
 			const refreshToken = req.cookies.refreshToken;
 			const userData = tokenService.verifyFerfeshToken(refreshToken);
 			const dbToken = await tokenService.findRefreshToken(refreshToken); //токен есть => объект из бд. Нет => undefined
 			console.log("userData", userData);
-
 			if (!userData || !dbToken) {
 				return next(ApiError.badRequest("Invalid refresh token"));
 			}
-
 			const payload = new TokenPayloadDTO(userData.id).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			const d = await db.saveToken(userData.id, tokens.refresh);

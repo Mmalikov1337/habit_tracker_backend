@@ -2,6 +2,7 @@ import db from "../Database";
 import ApiError from "../errors/ApiError";
 import tokenService from "./tokenService";
 import TokenPayloadDTO from "./../DTO/TokenPayloadDTO";
+
 interface IregisterUser {
 	access: string;
 	refresh: string;
@@ -25,6 +26,20 @@ class UserService {
 			const tokens = tokenService.generateTokens(payload);
 			await db.saveToken(userId, tokens.refresh);
 			return { ...tokens, userId };
+		} catch (e) {
+			throw e;
+		}
+	}
+	async logoutUser(refreshToken: string) {
+		try {
+			if (!refreshToken) {
+				throw ApiError.badRequest("RefreshToken is null.");
+			}
+			const dbRefreshToken = await db.findRefreshToken(refreshToken);
+			if (!dbRefreshToken) {
+				throw ApiError.badRequest("RefreshToken not found.");
+			}
+			await db.deleteRefreshToken(refreshToken);
 		} catch (e) {
 			throw e;
 		}
