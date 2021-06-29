@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorHandler";
 import config from "./config";
+import habit from "./routers/habitRouter";
 const app = express();
 
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/test", test);
+app.use("/habit", habit);
 app.use(errorHandler);
 
 const PORT = config.PORT ?? 5000;

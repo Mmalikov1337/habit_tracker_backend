@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
-import config from "./../config";
+import config from "../config";
 import ApiError from "../errors/ApiError";
-import db from "./../Database";
+import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 // import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 
@@ -24,7 +24,7 @@ class TokenService {
 		try {
 			const accessKey = config.ACCESS_TOKEN_KEY as string;
 			const refreshsKey = config.REFRESH_TOKEN_KEY as string;
-			const access = jwt.sign(data, accessKey, { expiresIn: "10m" });
+			const access = jwt.sign(data, accessKey, { expiresIn: "10h" });
 			const refresh = jwt.sign(data, refreshsKey, { expiresIn: "30d" });
 			return {
 				access,

@@ -3,6 +3,7 @@ import mysql, { Connection } from "mysql2/promise";
 import UserDTO from "./DTO/UserDTO";
 import ApiError from "./errors/ApiError";
 import config from "./config";
+import TokenPayloadDTO from "./DTO/TokenPayloadDTO";
 
 class Database {
 	conn: Promise<Connection>;
@@ -120,6 +121,27 @@ class Database {
 		// console.log(arguments);
 		const [a] = await (await this.conn).execute(command, args);
 		// console.log("ADDAASDASDASDASDASD", a, "___");
+	}
+
+	async getHabits(
+		userId: number,
+		preparedHabitOptions: { values: string; options: Array<string> } | null
+	) {
+		try {
+			const { values, options } = preparedHabitOptions ?? {};
+			const queryString = values
+				? `SELECT * FROM habits WHERE user_id=? ${values}`
+				: `SELECT * FROM habits WHERE user_id=?`;
+			const queryOptions = options ? [userId, ...options] : [userId];
+
+			const [rows]: [mysql.RowDataPacket[], any] = await (
+				await this.conn
+			).query(queryString, queryOptions);
+			return rows;
+		} catch (e) {
+			console.log("db getHabits");
+			throw e;
+		}
 	}
 }
 

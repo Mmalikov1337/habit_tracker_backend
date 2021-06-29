@@ -1,7 +1,7 @@
 import db from "../Database";
 import ApiError from "../errors/ApiError";
 import tokenService from "./tokenService";
-import TokenPayloadDTO from "./../DTO/TokenPayloadDTO";
+import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 
 interface IregisterUser {
 	access: string;

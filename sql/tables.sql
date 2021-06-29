@@ -25,15 +25,16 @@ CREATE TABLE `habits` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `tags` json DEFAULT NULL,
   `priority` int DEFAULT NULL,
   `difficulty` int DEFAULT NULL,
   `notes` json DEFAULT NULL,
   `is_healfully` BOOLEAN DEFAULT FALSE,
   `value` int DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP
+  `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (id)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 );
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
