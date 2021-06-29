@@ -5,6 +5,7 @@ class TokenPayloadDTO {
 		this.id = id;
 		this["id"]
 	}
+	
 	toPlainObject() {
 		//Expected "payload" to be a plain object. (TokenService.generateTokens())
 		return { ...this };

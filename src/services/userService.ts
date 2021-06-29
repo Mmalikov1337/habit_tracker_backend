@@ -19,7 +19,7 @@ class UserService {
 		try {
 			const userData = await db.getUserIdByEmail(email);
 			if (userData) {
-				throw ApiError.badRequest(`User with email (${email}) already exists`);
+				throw ApiError.badRequest(`User with email (${email}) already exists.`);
 			}
 			const userId = await db.addUser(email, name, password, bio);
 			const payload = new TokenPayloadDTO(userId).toPlainObject();
@@ -45,20 +45,35 @@ class UserService {
 			throw e;
 		}
 	}
-	
+
 	async loginUser(email: string, password: string) {
 		try {
 			const user = await db.getUserByEmailAndPasword(email, password);
 			if (!user) {
-				throw ApiError.badRequest("Failed to login");
+				throw ApiError.badRequest("Failed to login.");
 			}
 			if (!user.id) {
-				throw ApiError.badRequest("User must have id");
+				throw ApiError.badRequest("User must have id.");
 			}
 			const payload = new TokenPayloadDTO(Number(user.id)).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			db.saveToken(Number(user.id), tokens.refresh);
 			return { ...tokens, userId: user.id };
+		} catch (e) {
+			throw e;
+		}
+	}
+	async checkUserPermisstion(permissionLevel: number, userDataVerified: TokenPayloadDTO):Promise<Boolean> {
+		try {
+			const dbUserData = await db.getUserDataByParam("id", [userDataVerified.id]);
+			// console.log("dbUserData", dbUserData);
+			if (!dbUserData) {
+				throw ApiError.forbidden("User not found.");
+			}
+			if (!dbUserData.permission_lvl) {
+				throw ApiError.forbidden("User dont have permissions.");
+			}
+			return dbUserData.permission_lvl >= permissionLevel;
 		} catch (e) {
 			throw e;
 		}

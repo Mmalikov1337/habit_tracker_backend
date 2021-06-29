@@ -19,7 +19,7 @@ class UserController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
-	
+
 	async login(req: Request, res: Response, next: NextFunction) {
 		const { email, password } = req.body;
 		try {

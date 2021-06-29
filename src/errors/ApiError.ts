@@ -11,11 +11,13 @@ export default class ApiError extends Error {
 	static badRequest(message: string, errors = []): ApiError {
 		return new ApiError(400, message, errors);
 	}
-	
+
 	static notAuthorizated(message: string, errors = []): ApiError {
 		return new ApiError(401, message, errors);
 	}
-
+	static forbidden(message: string, errors = []): ApiError {
+		return new ApiError(403, message, errors);
+	}
 	override toString() {
 		return this.message;
 	}

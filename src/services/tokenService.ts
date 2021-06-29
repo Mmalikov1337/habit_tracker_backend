@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import config from "./../config";
 import ApiError from "../errors/ApiError";
 import db from "./../Database";
+import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 // import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 
 // dotenv.config();
@@ -12,8 +13,8 @@ interface IgenerateTokens {
 	refresh: string;
 }
 
-interface IverifyToken {
-	id: number;
+interface IverifyToken extends TokenPayloadDTO {
+	// id: number;
 	iat: number;
 	exp: number;
 }

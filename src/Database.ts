@@ -53,10 +53,10 @@ class Database {
 		}
 	}
 
-	async getUserData(param: string, userId: number): Promise<UserDTO | null> {
+	async getUserDataByParam(param: string, userId: Array<number> = []): Promise<UserDTO | null> {
 		const [rows]: [mysql.RowDataPacket[], any] = await (
 			await this.conn
-		).query(`SELECT * FROM users WHERE ${param}=?`, [userId]);
+		).query(`SELECT * FROM users WHERE ${param}=?`, userId);
 		if (rows[0]) {
 			return new UserDTO(rows[0]);
 		}
@@ -115,12 +115,11 @@ class Database {
 			throw e;
 		}
 	}
-	
+
 	async executeAnyCommand(command: string, args: Array<any>) {
 		// console.log(arguments);
-		const [a] = await(await this.conn).execute(command, args);
+		const [a] = await (await this.conn).execute(command, args);
 		// console.log("ADDAASDASDASDASDASD", a, "___");
-		
 	}
 }
 
