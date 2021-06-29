@@ -7,4 +7,6 @@ const habit = express.Router();
 
 habit.get("/", authentificationHandler, authorizationHandler(1), HabitController.getHabits);
 
+// habit.post("/", authentificationHandler, authorizationHandler(1), HabitController.createHabit);
+
 export default habit;

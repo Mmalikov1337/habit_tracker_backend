@@ -21,6 +21,15 @@ class HabitController {
 			return next(ApiError.badRequest(e.message));
 		}
 	}
+	// async createHabits(req: RequestExtended | Request, res: Response, next: NextFunction) {
+		
+	// 	try {
+	// 		const userDataVerified = (req as RequestExtended).userDataVerified;
+			
+	// 	} catch (e) {
+	// 		return next(ApiError.badRequest(e.message));
+	// 	}
+	// }
 }
 
 export default new HabitController();

@@ -4,6 +4,7 @@ import UserDTO from "./DTO/UserDTO";
 import ApiError from "./errors/ApiError";
 import config from "./config";
 import TokenPayloadDTO from "./DTO/TokenPayloadDTO";
+import HabitDTO from "./DTO/HabitDTO";
 
 class Database {
 	conn: Promise<Connection>;
@@ -126,7 +127,7 @@ class Database {
 	async getHabits(
 		userId: number,
 		preparedHabitOptions: { values: string; options: Array<string> } | null
-	) {
+	): Promise<Array<HabitDTO>> {
 		try {
 			const { values, options } = preparedHabitOptions ?? {};
 			const queryString = values
@@ -137,7 +138,9 @@ class Database {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query(queryString, queryOptions);
-			return rows;
+			return rows.map((it) => {
+				return new HabitDTO(it);
+			});
 		} catch (e) {
 			console.log("db getHabits");
 			throw e;
