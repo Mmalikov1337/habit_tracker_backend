@@ -5,12 +5,12 @@ import tokenService from "../services/tokenService";
 function authorizationHandler(req: Request, res: Response, next: NextFunction) {
 	try {
 		const authHeader = req.headers.authorization;
-		console.log("req.headers.authorization", authHeader);
+		// console.log("req.headers.authorization", authHeader);
 		if (!authHeader) {
 			throw ApiError.notAuthorizated("Authorization header is empty.");
 		}
 		const [authType, accessToken] = authHeader.split(" ");
-		console.log("authType", authType);
+		// console.log("authType", authType);
 		if (authType !== "Bearer") {
 			throw ApiError.notAuthorizated("Wrong authorization type.");
 		}

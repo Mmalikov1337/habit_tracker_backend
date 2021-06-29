@@ -1,26 +1,25 @@
 import mysql, { Connection } from "mysql2/promise";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import UserDTO from "./DTO/UserDTO";
 import ApiError from "./errors/ApiError";
-
-dotenv.config();
+import config from "./config";
 
 class Database {
 	conn: Promise<Connection>;
 
 	constructor() {
 		this.conn = mysql.createConnection({
-			host: process.env.host,
-			user: process.env.user,
-			password: process.env.password,
-			database: process.env.database,
+			host: config.host,
+			user: config.user,
+			password: config.password,
+			database: config.database,
 		});
 	}
 
 	async getUserIdByEmail(email: string): Promise<UserDTO | null> {
 		const [rows]: [mysql.RowDataPacket[], any] = await (
 			await this.conn
-		).query("SELECT * FROM users WHERE mail=?", [email]);
+		).query("SELECT * FROM users WHERE email=?", [email]);
 		if (rows[0]) {
 			return new UserDTO(rows[0]);
 		}
@@ -31,7 +30,7 @@ class Database {
 		try {
 			const a: any = await (
 				await this.conn
-			).execute("INSERT INTO users (mail, name, password, bio) VALUES (?, ?, ?, ?)", [
+			).execute("INSERT INTO users (email, name, password, bio) VALUES (?, ?, ?, ?)", [
 				email,
 				username,
 				password,
@@ -43,14 +42,14 @@ class Database {
 		}
 	}
 
-	async getUserByMailAndPasword(email: string, password: string): Promise<UserDTO> {
+	async getUserByEmailAndPasword(email: string, password: string): Promise<UserDTO> {
 		try {
 			const [userData]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
-			).query("SELECT * FROM users WHERE mail=? and password=?", [email, password]);
+			).query("SELECT * FROM users WHERE email=? and password=?", [email, password]);
 			return new UserDTO(userData[0]);
 		} catch (e) {
-			throw new ApiError(500, "Error in Database, getUserByMailAndPasword");
+			throw new ApiError(500, "Error in Database, getUserByEmailAndPasword");
 		}
 	}
 

@@ -1,8 +1,6 @@
 import express from "express";
-import dotenv from "dotenv";
 import UserController from "../controllers/UserController";
 
-dotenv.config();
 
 const auth = express.Router();
 

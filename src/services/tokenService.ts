@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
+import config from "./../config";
 import ApiError from "../errors/ApiError";
 import db from "./../Database";
-import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
+// import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 
-dotenv.config();
+// dotenv.config();
 
 interface IgenerateTokens {
 	access: string;
@@ -20,8 +21,8 @@ interface IverifyToken {
 class TokenService {
 	generateTokens(data: any): IgenerateTokens {
 		try {
-			const accessKey = process.env.ACCESS_TOKEN_KEY as string;
-			const refreshsKey = process.env.REFRESH_TOKEN_KEY as string;
+			const accessKey = config.ACCESS_TOKEN_KEY as string;
+			const refreshsKey = config.REFRESH_TOKEN_KEY as string;
 			const access = jwt.sign(data, accessKey, { expiresIn: "10m" });
 			const refresh = jwt.sign(data, refreshsKey, { expiresIn: "30d" });
 			return {
@@ -35,8 +36,8 @@ class TokenService {
 
 	verifyFerfeshToken(token: string): IverifyToken | null {
 		try {
-			const userData = jwt.verify(token, process.env.REFRESH_TOKEN_KEY as string);
-			console.log(userData);
+			const userData = jwt.verify(token, config.REFRESH_TOKEN_KEY as string);
+			// console.log(userData);
 			return userData as IverifyToken;
 		} catch (e) {
 			return null;
@@ -45,8 +46,8 @@ class TokenService {
 	
 	verifyAccessToken(token: string): IverifyToken | null {
 		try {
-			const userData = jwt.verify(token, process.env.ACCESS_TOKEN_KEY as string);
-			console.log(userData);
+			const userData = jwt.verify(token, config.ACCESS_TOKEN_KEY as string);
+			// console.log(userData);
 			return userData as IverifyToken;
 		} catch (e) {
 			return null;

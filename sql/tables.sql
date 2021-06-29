@@ -1,12 +1,12 @@
 CREATE TABLE `users` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `mail` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `stats` json DEFAULT NULL,
   `rang` varchar(255) DEFAULT NULL,
   `bio` varchar(255) DEFAULT NULL,
-  `role` int DEFAULT 1,
+  `permission_lvl` int DEFAULT 1,
   `photo` varchar(255) DEFAULT NULL,
   `is_mail_activated` BOOLEAN DEFAULT FALSE,
   `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP

@@ -7,9 +7,9 @@ import db from "./../Database";
 
 class UserController {
 	async register(req: Request, res: Response, next: NextFunction) {
-		const { email, username, password, bio } = req.body;
+		const { email, name, password, bio } = req.body;
 		try {
-			const userData = await userService.registerUser(email, username, password, bio);
+			const userData = await userService.registerUser(email, name, password, bio);
 			res.cookie("refreshToken", userData.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
@@ -49,7 +49,7 @@ class UserController {
 			const refreshToken = req.cookies.refreshToken;
 			const userData = tokenService.verifyFerfeshToken(refreshToken);
 			const dbToken = await tokenService.findRefreshToken(refreshToken); //токен есть => объект из бд. Нет => undefined
-			console.log("userData", userData);
+			// console.log("userData", userData);
 			if (!userData || !dbToken) {
 				return next(ApiError.badRequest("Invalid refresh token"));
 			}

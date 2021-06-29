@@ -4,6 +4,7 @@ import test from "./routers/test";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorHandler";
+import config from "./config";
 const app = express();
 
 app.use(cors());
@@ -13,7 +14,7 @@ app.use("/auth", authRouter);
 app.use("/test", test);
 app.use(errorHandler);
 
-const PORT = process.env.PORT ?? 5000;
+const PORT = config.PORT ?? 5000;
 
 const start = () => {
 	try {

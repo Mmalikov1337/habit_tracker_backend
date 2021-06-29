@@ -12,7 +12,7 @@ interface IregisterUser {
 class UserService {
 	async registerUser(
 		email: string,
-		username: string,
+		name: string,
 		password: string,
 		bio: string
 	): Promise<IregisterUser> {
@@ -21,7 +21,7 @@ class UserService {
 			if (userData) {
 				throw ApiError.badRequest(`User with email (${email}) already exists`);
 			}
-			const userId = await db.addUser(email, username, password, bio);
+			const userId = await db.addUser(email, name, password, bio);
 			const payload = new TokenPayloadDTO(userId).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			await db.saveToken(userId, tokens.refresh);
@@ -48,7 +48,7 @@ class UserService {
 	
 	async loginUser(email: string, password: string) {
 		try {
-			const user = await db.getUserByMailAndPasword(email, password);
+			const user = await db.getUserByEmailAndPasword(email, password);
 			if (!user) {
 				throw ApiError.badRequest("Failed to login");
 			}
