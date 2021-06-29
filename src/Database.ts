@@ -146,6 +146,30 @@ class Database {
 			throw e;
 		}
 	}
+	async createHabit(newHabit: HabitDTO): Promise<number> {
+		try {
+			const params = [
+				newHabit.user_id,
+				newHabit.title,
+				newHabit.priority,
+				newHabit.difficulty,
+				newHabit.notes,
+				newHabit.is_healfully,
+				newHabit.value,
+				newHabit.photo,
+			];
+			const a: any = await (
+				await this.conn
+			).execute(
+				"INSERT INTO habits (user_id,title,priority,difficulty,notes,is_healfully,value,photo) VALUES (?,?,?,?,?,?,?,?)",
+				params
+			);
+			return a[0].insertId;
+		} catch (e) {
+			console.log("db createHabit");
+			throw e;
+		}
+	}
 }
 
 export default new Database();

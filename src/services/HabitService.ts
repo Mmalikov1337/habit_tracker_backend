@@ -4,6 +4,7 @@ import config from "../config";
 import ApiError from "../errors/ApiError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
+import HabitDTO from "../DTO/HabitDTO";
 // import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 
 // dotenv.config();
@@ -28,7 +29,7 @@ class HabitService {
 			if (!habitOptions) {
 				return await db.getHabits(userDataVerified.id, null);
 			}
-			
+
 			const values = habitOptions.reduce((acc, cur) => {
 				return acc + cur.value + " = " + "?";
 			}, " AND ");
@@ -40,6 +41,13 @@ class HabitService {
 			const preparedHabitOptions = { values, options };
 
 			return await db.getHabits(userDataVerified.id, preparedHabitOptions);
+		} catch (e) {
+			throw e;
+		}
+	}
+	async createHabit(newHabit: HabitDTO) {
+		try {
+			return await db.createHabit(newHabit);
 		} catch (e) {
 			throw e;
 		}
