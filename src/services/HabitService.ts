@@ -54,12 +54,27 @@ class HabitService {
 	}
 	async updateHabit(newHabit: HabitDTO, userDataVerified: TokenPayloadDTO) {
 		try {
-			const isVerifyed = await db.verifyHabit(newHabit, userDataVerified);
+			if(!newHabit.id){
+				throw ClientError.badRequest("Habit must have id.")
+			}
+			const isVerifyed = await db.verifyHabit(newHabit.id, userDataVerified);
 			if(!isVerifyed){
 				throw ClientError.badRequest("Habit not found.")
 			}
 
 			return await db.updateHabit(newHabit);
+		} catch (e) {
+			throw e;
+		}
+	}
+	async deleteHabit(habitId: number, userDataVerified: TokenPayloadDTO) {
+		try {
+			const isVerifyed = await db.verifyHabit(habitId, userDataVerified);
+			if(!isVerifyed){
+				throw ClientError.badRequest("Habit not found.")
+			}
+			
+			return await db.deleteHabit(habitId);
 		} catch (e) {
 			throw e;
 		}

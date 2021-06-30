@@ -11,4 +11,6 @@ habit.post("/", authentificationHandler, authorizationHandler(1), HabitControlle
 
 habit.put("/", authentificationHandler, authorizationHandler(1), HabitController.updateHabit);
 
+habit.delete("/", authentificationHandler, authorizationHandler(1), HabitController.deleteHabit);
+
 export default habit;

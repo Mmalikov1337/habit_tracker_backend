@@ -40,16 +40,33 @@ class HabitController {
 		try {
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 			const newHabit: HabitDTO = new HabitDTO(req.body.habit);
-			
+
 			if (!newHabit) {
 				throw ClientError.badRequest("Wrong habit.");
 			}
 			const updationResult = await HabitService.updateHabit(newHabit, userDataVerified);
-			if(!updationResult){
-				throw ClientError.badRequest("Habit updation error.")
+			if (!updationResult) {
+				throw ClientError.badRequest("Habit updation error.");
 			}
 			res.status(200).json({ mesage: "OK" });
+		} catch (e) {
+			return next(ClientError.badRequest(e.message));
+		}
+	}
+	async deleteHabit(req: RequestExtended | Request, res: Response, next: NextFunction) {
+		try {
+			const userDataVerified = (req as RequestExtended).userDataVerified;
+			const habitId: number = Number(req.body.habitId);
+			console.log(habitId);
 
+			if (typeof habitId != "number" || isNaN(habitId)) {
+				throw ClientError.badRequest("Wrong habit id");
+			}
+			const deletionResult = await HabitService.deleteHabit(habitId, userDataVerified);
+			if (!deletionResult) {
+				throw ClientError.badRequest("Habit updation error.");
+			}
+			res.status(200).json({ mesage: "OK" });
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
 		}

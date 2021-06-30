@@ -170,15 +170,12 @@ class Database {
 			throw e;
 		}
 	}
-	async verifyHabit(newHabit: HabitDTO, userDataVerified: TokenPayloadDTO): Promise<boolean> {
+	async verifyHabit(id: number, userDataVerified: TokenPayloadDTO): Promise<boolean> {
 		// свою ли привычку меняет пользователь
 		try {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
-			).query("SELECT * FROM habits WHERE user_id=? AND id=?", [
-				userDataVerified.id,
-				newHabit.id,
-			]);
+			).query("SELECT * FROM habits WHERE user_id=? AND id=?", [userDataVerified.id, id]);
 			// console.log("verifyHabit", rows[0]);
 
 			return !!rows[0]; //Если есть то ок, нету - неок
@@ -211,6 +208,19 @@ class Database {
 			return !!a[0];
 		} catch (e) {
 			console.log("db updateHabit");
+			throw e;
+		}
+	}
+	async deleteHabit(habitId: number): Promise<boolean> {
+		try {
+			const a: any = await (
+				await this.conn
+			).execute("DELETE FROM habits WHERE id=?", [habitId]);
+			// console.log("deleteHabit", a[0]);
+
+			return !!a[0];
+		} catch (e) {
+			console.log("db deleteHabit");
 			throw e;
 		}
 	}
