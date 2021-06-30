@@ -1,7 +1,7 @@
 import mysql, { Connection } from "mysql2/promise";
 // import dotenv from "dotenv";
 import UserDTO from "./DTO/UserDTO";
-import ApiError from "./errors/ApiError";
+import ClientError from "./errors/ApiError";
 import config from "./config";
 import TokenPayloadDTO from "./DTO/TokenPayloadDTO";
 import HabitDTO from "./DTO/HabitDTO";
@@ -40,7 +40,7 @@ class Database {
 			]);
 			return a[0].insertId;
 		} catch (e) {
-			throw new ApiError(500, "Error in Database, addUser");
+			throw new ClientError(500, "Error in Database, addUser");
 		}
 	}
 
@@ -51,7 +51,7 @@ class Database {
 			).query("SELECT * FROM users WHERE email=? and password=?", [email, password]);
 			return new UserDTO(userData[0]);
 		} catch (e) {
-			throw new ApiError(500, "Error in Database, getUserByEmailAndPasword");
+			throw new ClientError(500, "Error in Database, getUserByEmailAndPasword");
 		}
 	}
 
@@ -167,6 +167,50 @@ class Database {
 			return a[0].insertId;
 		} catch (e) {
 			console.log("db createHabit");
+			throw e;
+		}
+	}
+	async verifyHabit(newHabit: HabitDTO, userDataVerified: TokenPayloadDTO): Promise<boolean> {
+		// свою ли привычку меняет пользователь
+		try {
+			const [rows]: [mysql.RowDataPacket[], any] = await (
+				await this.conn
+			).query("SELECT * FROM habits WHERE user_id=? AND id=?", [
+				userDataVerified.id,
+				newHabit.id,
+			]);
+			// console.log("verifyHabit", rows[0]);
+
+			return !!rows[0]; //Если есть то ок, нету - неок
+		} catch (e) {
+			console.log("db verifyHabit");
+			throw e;
+		}
+	}
+	async updateHabit(newHabit: HabitDTO): Promise<boolean> {
+		try {
+			const params = [
+				newHabit.user_id,
+				newHabit.title,
+				newHabit.priority,
+				newHabit.difficulty,
+				newHabit.notes,
+				newHabit.is_healfully,
+				newHabit.value,
+				newHabit.photo,
+				newHabit.id,
+			];
+			const a: any = await (
+				await this.conn
+			).execute(
+				"UPDATE habits SET user_id=?, title=?, priority=?, difficulty=?, notes=?, is_healfully=?, value=?, photo=? WHERE id=?;",
+				params
+			);
+			// console.log("updateHabit", a[0]);
+
+			return !!a[0];
+		} catch (e) {
+			console.log("db updateHabit");
 			throw e;
 		}
 	}

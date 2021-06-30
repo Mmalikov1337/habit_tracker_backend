@@ -9,4 +9,6 @@ habit.get("/", authentificationHandler, authorizationHandler(1), HabitController
 
 habit.post("/", authentificationHandler, authorizationHandler(1), HabitController.createHabit);
 
+habit.post("/update", authentificationHandler, authorizationHandler(1), HabitController.updateHabit);
+
 export default habit;

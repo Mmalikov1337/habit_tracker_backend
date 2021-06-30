@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
 import config from "../config";
-import ApiError from "../errors/ApiError";
+import ClientError from "../errors/ApiError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 // import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
@@ -31,7 +31,7 @@ class TokenService {
 				refresh,
 			};
 		} catch (e) {
-			throw new ApiError(500, "Error in TokenService generateTokens");
+			throw new ClientError(500, "Error in TokenService generateTokens");
 		}
 	}
 

@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import HabitDTO from "../DTO/HabitDTO";
-import ApiError from "../errors/ApiError";
+import ClientError from "../errors/ApiError";
 import RequestExtended from "../extended/ResponseExtended";
 import HabitService from "../services/HabitService";
 
@@ -15,11 +15,11 @@ class HabitController {
 			const dbHabits = await HabitService.getHabits(userDataVerified, habitOptions);
 
 			if (!dbHabits) {
-				throw ApiError.badRequest("Failed to get habits");
+				throw ClientError.badRequest("Failed to get habits");
 			}
 			return res.status(200).json(dbHabits);
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 	async createHabit(req: RequestExtended | Request, res: Response, next: NextFunction) {
@@ -27,13 +27,31 @@ class HabitController {
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 			const newHabit: HabitDTO = new HabitDTO(req.body.habit);
 			if (!newHabit) {
-				throw ApiError.badRequest("Wrong habit.");
+				throw ClientError.badRequest("Wrong habit.");
 			}
 			newHabit.user_id = userDataVerified.id;
-			const insId = await HabitService.createHabit(newHabit);
-			res.status(200).json({ id: insId });
+			const insertionId = await HabitService.createHabit(newHabit);
+			res.status(200).json({ id: insertionId });
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
+		}
+	}
+	async updateHabit(req: RequestExtended | Request, res: Response, next: NextFunction) {
+		try {
+			const userDataVerified = (req as RequestExtended).userDataVerified;
+			const newHabit: HabitDTO = new HabitDTO(req.body.habit);
+			
+			if (!newHabit) {
+				throw ClientError.badRequest("Wrong habit.");
+			}
+			const updationResult = await HabitService.updateHabit(newHabit, userDataVerified);
+			if(!updationResult){
+				throw ClientError.badRequest("Habit updation error.")
+			}
+			res.status(200).json({ mesage: "OK" });
+
+		} catch (e) {
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
-import ApiError from "../errors/ApiError";
+import ClientError from "../errors/ApiError";
 import tokenService from "../services/tokenService";
 import userService from "../services/userService";
 import db from "./../Database";
@@ -16,7 +16,7 @@ class UserController {
 			});
 			return res.status(201).json(userData);
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 
@@ -30,7 +30,7 @@ class UserController {
 			});
 			return res.status(201).json(userData);
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 
@@ -40,7 +40,7 @@ class UserController {
 			await userService.logoutUser(refreshToken);
 			return res.status(201).json({ message: "logged out" });
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 
@@ -51,7 +51,7 @@ class UserController {
 			const dbToken = await tokenService.findRefreshToken(refreshToken); //токен есть => объект из бд. Нет => undefined
 			// console.log("userData", userData);
 			if (!userData || !dbToken) {
-				return next(ApiError.badRequest("Invalid refresh token"));
+				return next(ClientError.badRequest("Invalid refresh token"));
 			}
 			const payload = new TokenPayloadDTO(userData.id).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
@@ -62,7 +62,7 @@ class UserController {
 			});
 			res.json({ ...tokens, userId: payload.id });
 		} catch (e) {
-			return next(ApiError.badRequest(e.message));
+			return next(ClientError.badRequest(e.message));
 		}
 	}
 }

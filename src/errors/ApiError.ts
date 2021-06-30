@@ -1,4 +1,4 @@
-export default class ApiError extends Error {
+export default class ClientError extends Error {
 	status: number;
 	errors: Array<Error>;
 
@@ -8,15 +8,15 @@ export default class ApiError extends Error {
 		this.errors = errors;
 	}
 
-	static badRequest(message: string, errors = []): ApiError {
-		return new ApiError(400, message, errors);
+	static badRequest(message: string, errors = []): ClientError {
+		return new ClientError(400, message, errors);
 	}
 
-	static notAuthorizated(message: string, errors = []): ApiError {
-		return new ApiError(401, message, errors);
+	static notAuthorizated(message: string, errors = []): ClientError {
+		return new ClientError(401, message, errors);
 	}
-	static forbidden(message: string, errors = []): ApiError {
-		return new ApiError(403, message, errors);
+	static forbidden(message: string, errors = []): ClientError {
+		return new ClientError(403, message, errors);
 	}
 	override toString() {
 		return this.message;

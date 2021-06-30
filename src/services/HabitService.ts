@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
 import config from "../config";
-import ApiError from "../errors/ApiError";
+import ClientError from "../errors/ApiError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
@@ -48,6 +48,18 @@ class HabitService {
 	async createHabit(newHabit: HabitDTO) {
 		try {
 			return await db.createHabit(newHabit);
+		} catch (e) {
+			throw e;
+		}
+	}
+	async updateHabit(newHabit: HabitDTO, userDataVerified: TokenPayloadDTO) {
+		try {
+			const isVerifyed = await db.verifyHabit(newHabit, userDataVerified);
+			if(!isVerifyed){
+				throw ClientError.badRequest("Habit not found.")
+			}
+
+			return await db.updateHabit(newHabit);
 		} catch (e) {
 			throw e;
 		}

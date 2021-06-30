@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import ApiError from "../errors/ApiError";
+import ClientError from "../errors/ApiError";
 import RequestExtended from "../extended/ResponseExtended";
 import userService from "../services/userService";
 
@@ -8,14 +8,14 @@ function authorizationHandler(permissionLevel: number) {
 		try {
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 			if (!userDataVerified) {
-				throw ApiError.forbidden("UserDataVerified is empty");
+				throw ClientError.forbidden("UserDataVerified is empty");
 			}
 			const dbUserData = await userService.checkUserPermisstion(
 				permissionLevel,
 				userDataVerified
 			);
 			if (!dbUserData) {
-				throw ApiError.forbidden("Forbidden.");
+				throw ClientError.forbidden("Forbidden.");
 			}
 			return next();
 		} catch (e) {
