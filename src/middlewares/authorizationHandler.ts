@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import RequestExtended from "../extended/ResponseExtended";
 import userService from "../services/userService";
 
@@ -14,6 +14,8 @@ function authorizationHandler(permissionLevel: number) {
 				permissionLevel,
 				userDataVerified
 			);
+			console.log("dbUserData",dbUserData);
+			
 			if (!dbUserData) {
 				throw ClientError.forbidden("Forbidden.");
 			}

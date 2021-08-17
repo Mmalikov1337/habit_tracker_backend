@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import ClientError from "./../errors/ApiError";
+import ClientError from "./../errors/ClientError";
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
 	console.error("err.name: (", err.name, ")", "message: (", err.message, ")");

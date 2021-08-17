@@ -1,24 +1,7 @@
-import jwt from "jsonwebtoken";
-// import dotenv from "dotenv";
-import config from "../config";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
-// import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
-
-// dotenv.config();
-
-// interface IgenerateTokens {
-// 	access: string;
-// 	refresh: string;
-// }
-
-// interface IverifyToken extends TokenPayloadDTO {
-// 	// id: number;
-// 	iat: number;
-// 	exp: number;
-// }
 
 class HabitService {
 	async getHabits(
@@ -26,6 +9,9 @@ class HabitService {
 		habitOptions: [{ value: string; option: string }] | null
 	) {
 		try {
+			if(!userDataVerified.id){
+				throw ClientError.badRequest("Wrong id getHabits")
+			}
 			if (!habitOptions) {
 				return await db.getHabits(userDataVerified.id, null);
 			}

@@ -1,12 +1,13 @@
 import db from "../Database";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import tokenService from "./tokenService";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
+import UserDTO from "../DTO/UserDTO";
 
-interface IregisterUser {
+interface IAuthUserData {
 	access: string;
 	refresh: string;
-	userId: number;
+	userData:TokenPayloadDTO;
 }
 
 class UserService {
@@ -15,17 +16,17 @@ class UserService {
 		name: string,
 		password: string,
 		bio: string
-	): Promise<IregisterUser> {
+	): Promise<IAuthUserData> {
 		try {
-			const userData = await db.getUserIdByEmail(email);
+			const userData = await db.getUserByEmail(email);
 			if (userData) {
 				throw ClientError.badRequest(`User with email (${email}) already exists.`);
 			}
 			const userId = await db.addUser(email, name, password, bio);
-			const payload = new TokenPayloadDTO(userId).toPlainObject();
-			const tokens = tokenService.generateTokens(payload);
+			const payload = new TokenPayloadDTO(new UserDTO({ id: userId, email, name, password, bio }));
+			const tokens = tokenService.generateTokens(payload.toPlainObject());
 			await db.saveToken(userId, tokens.refresh);
-			return { ...tokens, userId };
+			return { ...tokens, userData:payload };
 		} catch (e) {
 			throw e;
 		}
@@ -46,7 +47,7 @@ class UserService {
 		}
 	}
 
-	async loginUser(email: string, password: string) {
+	async loginUser(email: string, password: string):Promise<IAuthUserData> {
 		try {
 			const user = await db.getUserByEmailAndPasword(email, password);
 			if (!user) {
@@ -55,17 +56,20 @@ class UserService {
 			if (!user.id) {
 				throw ClientError.badRequest("User must have id.");
 			}
-			const payload = new TokenPayloadDTO(Number(user.id)).toPlainObject();
-			const tokens = tokenService.generateTokens(payload);
+			const payload = new TokenPayloadDTO(user);
+			const tokens = tokenService.generateTokens(payload.toPlainObject());
 			db.saveToken(Number(user.id), tokens.refresh);
-			return { ...tokens, userId: user.id };
+			return { ...tokens, userData:payload };
 		} catch (e) {
 			throw e;
 		}
 	}
-	async checkUserPermisstion(permissionLevel: number, userDataVerified: TokenPayloadDTO):Promise<Boolean> {
+	async checkUserPermisstion(
+		permissionLevel: number,
+		userDataVerified: TokenPayloadDTO
+	): Promise<Boolean> {
 		try {
-			const dbUserData = await db.getUserDataByParam("id", [userDataVerified.id]);
+			const dbUserData = await db.getUserDataByParam("id", [userDataVerified.id!!]);
 			// console.log("dbUserData", dbUserData);
 			if (!dbUserData) {
 				throw ClientError.forbidden("User not found.");

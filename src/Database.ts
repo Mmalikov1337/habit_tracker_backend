@@ -1,7 +1,7 @@
 import mysql, { Connection } from "mysql2/promise";
 // import dotenv from "dotenv";
 import UserDTO from "./DTO/UserDTO";
-import ClientError from "./errors/ApiError";
+import ClientError from "./errors/ClientError";
 import config from "./config";
 import TokenPayloadDTO from "./DTO/TokenPayloadDTO";
 import HabitDTO from "./DTO/HabitDTO";
@@ -18,7 +18,7 @@ class Database {
 		});
 	}
 
-	async getUserIdByEmail(email: string): Promise<UserDTO | null> {
+	async getUserByEmail(email: string): Promise<UserDTO | null> {
 		const [rows]: [mysql.RowDataPacket[], any] = await (
 			await this.conn
 		).query("SELECT * FROM users WHERE email=?", [email]);
@@ -40,6 +40,8 @@ class Database {
 			]);
 			return a[0].insertId;
 		} catch (e) {
+			console.log(e.message);
+
 			throw new ClientError(500, "Error in Database, addUser");
 		}
 	}
@@ -49,9 +51,13 @@ class Database {
 			const [userData]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query("SELECT * FROM users WHERE email=? and password=?", [email, password]);
+			// console.log("userData", userData);
+				
 			return new UserDTO(userData[0]);
 		} catch (e) {
-			throw new ClientError(500, "Error in Database, getUserByEmailAndPasword");
+			console.log(e.message, e.name);
+
+			throw ClientError.notAuthorizated("User not found");
 		}
 	}
 
@@ -213,9 +219,7 @@ class Database {
 	}
 	async deleteHabit(habitId: number): Promise<boolean> {
 		try {
-			const a: any = await (
-				await this.conn
-			).execute("DELETE FROM habits WHERE id=?", [habitId]);
+			const a: any = await (await this.conn).execute("DELETE FROM habits WHERE id=?", [habitId]);
 			// console.log("deleteHabit", a[0]);
 
 			return !!a[0];

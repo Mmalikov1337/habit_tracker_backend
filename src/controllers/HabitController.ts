@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import HabitDTO from "../DTO/HabitDTO";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import RequestExtended from "../extended/ResponseExtended";
 import HabitService from "../services/HabitService";
 

@@ -17,6 +17,7 @@ const config = {
 	password: process.env.password,
 	database: process.env.database,
 	PORT: process.env.PORT,
+	frontendAddress: process.env.FRONTEND_ADDRESS,
 };
 
 export default config;

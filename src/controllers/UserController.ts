@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from "express";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
-import ClientError from "../errors/ApiError";
+import UserDTO from "../DTO/UserDTO";
+import ClientError from "../errors/ClientError";
 import tokenService from "../services/tokenService";
 import userService from "../services/userService";
 import db from "./../Database";
@@ -8,12 +9,14 @@ import db from "./../Database";
 class UserController {
 	async register(req: Request, res: Response, next: NextFunction) {
 		const { email, name, password, bio } = req.body;
+
 		try {
 			const userData = await userService.registerUser(email, name, password, bio);
 			res.cookie("refreshToken", userData.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
+
 			return res.status(201).json(userData);
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
@@ -22,12 +25,15 @@ class UserController {
 
 	async login(req: Request, res: Response, next: NextFunction) {
 		const { email, password } = req.body;
+		console.log(email, password);
+
 		try {
 			const userData = await userService.loginUser(email, password);
 			res.cookie("refreshToken", userData.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
+
 			return res.status(201).json(userData);
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
@@ -53,14 +59,14 @@ class UserController {
 			if (!userData || !dbToken) {
 				return next(ClientError.badRequest("Invalid refresh token"));
 			}
-			const payload = new TokenPayloadDTO(userData.id).toPlainObject();
+			const payload = new TokenPayloadDTO(new UserDTO(userData)).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
-			const d = await db.saveToken(userData.id, tokens.refresh);
+			const d = await db.saveToken(Number(userData.id), tokens.refresh);
 			res.cookie("refreshToken", tokens.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
-			res.json({ ...tokens, userId: payload.id });
+			res.json({ ...tokens, userData: payload });
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
 		}

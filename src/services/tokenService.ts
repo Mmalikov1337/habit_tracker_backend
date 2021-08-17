@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
 import config from "../config";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 // import TokenPayloadDTO from "../DTO/TokenPayloadDTO";

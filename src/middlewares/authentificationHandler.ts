@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import ClientError from "../errors/ApiError";
+import ClientError from "../errors/ClientError";
 import RequestExtended from "../extended/ResponseExtended";
 import tokenService from "../services/tokenService";
 
