@@ -25,7 +25,7 @@ class UserController {
 
 	async login(req: Request, res: Response, next: NextFunction) {
 		const { email, password } = req.body;
-		console.log(email, password);
+		// console.log(email, password);
 
 		try {
 			const userData = await userService.loginUser(email, password);
@@ -55,18 +55,27 @@ class UserController {
 			const refreshToken = req.cookies.refreshToken;
 			const userData = tokenService.verifyFerfeshToken(refreshToken);
 			const dbToken = await tokenService.findRefreshToken(refreshToken); //токен есть => объект из бд. Нет => undefined
+			// console.log("FINAL PAYLOAD >>>", final,"<<<");
+			// console.log("3",{dbToken},{refreshToken});
+
 			// console.log("userData", userData);
 			if (!userData || !dbToken) {
 				return next(ClientError.badRequest("Invalid refresh token"));
 			}
+			// console.log("2");
+			
 			const payload = new TokenPayloadDTO(new UserDTO(userData)).toPlainObject();
 			const tokens = tokenService.generateTokens(payload);
 			const d = await db.saveToken(Number(userData.id), tokens.refresh);
+			// console.log("1");
 			res.cookie("refreshToken", tokens.refresh, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});
-			res.json({ ...tokens, userData: payload });
+			const final = { ...tokens, userData: payload };
+			// console.log("FINAL PAYLOAD >>>", final,"<<<");
+
+			res.json(final);
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
 		}

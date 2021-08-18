@@ -4,29 +4,13 @@ import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
 
 class HabitService {
-	async getHabits(
-		userDataVerified: TokenPayloadDTO,
-		habitOptions: [{ value: string; option: string }] | null
-	) {
+	async getHabits(userDataVerified: TokenPayloadDTO, id?: number) {
 		try {
-			if(!userDataVerified.id){
-				throw ClientError.badRequest("Wrong id getHabits")
-			}
-			if (!habitOptions) {
-				return await db.getHabits(userDataVerified.id, null);
+			if (!userDataVerified.id) {
+				throw ClientError.badRequest("Wrong id getHabits");
 			}
 
-			const values = habitOptions.reduce((acc, cur) => {
-				return acc + cur.value + " = " + "?";
-			}, " AND ");
-
-			const options = habitOptions.map((it) => {
-				return it.option;
-			});
-
-			const preparedHabitOptions = { values, options };
-
-			return await db.getHabits(userDataVerified.id, preparedHabitOptions);
+			return await db.getHabits(userDataVerified.id, id);
 		} catch (e) {
 			throw e;
 		}
@@ -40,12 +24,12 @@ class HabitService {
 	}
 	async updateHabit(newHabit: HabitDTO, userDataVerified: TokenPayloadDTO) {
 		try {
-			if(!newHabit.id){
-				throw ClientError.badRequest("Habit must have id.")
+			if (!newHabit.id) {
+				throw ClientError.badRequest("Habit must have id.");
 			}
 			const isVerifyed = await db.verifyHabit(newHabit.id, userDataVerified);
-			if(!isVerifyed){
-				throw ClientError.badRequest("Habit not found.")
+			if (!isVerifyed) {
+				throw ClientError.badRequest("Habit not found.");
 			}
 
 			return await db.updateHabit(newHabit);
@@ -56,10 +40,10 @@ class HabitService {
 	async deleteHabit(habitId: number, userDataVerified: TokenPayloadDTO) {
 		try {
 			const isVerifyed = await db.verifyHabit(habitId, userDataVerified);
-			if(!isVerifyed){
-				throw ClientError.badRequest("Habit not found.")
+			if (!isVerifyed) {
+				throw ClientError.badRequest("Habit not found.");
 			}
-			
+
 			return await db.deleteHabit(habitId);
 		} catch (e) {
 			throw e;

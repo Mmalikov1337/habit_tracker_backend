@@ -15,6 +15,9 @@ export default class ClientError extends Error {
 	static notAuthorizated(message: string, errors: Array<any> = []): ClientError {
 		return new ClientError(401, message, errors);
 	}
+	static authenticationTimeout(message: string, errors: Array<any> = []): ClientError {
+		return new ClientError(419, message, errors);
+	}
 	static forbidden(message: string, errors: Array<any> = []): ClientError {
 		return new ClientError(403, message, errors);
 	}

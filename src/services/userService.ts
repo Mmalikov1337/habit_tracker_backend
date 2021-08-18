@@ -58,7 +58,7 @@ class UserService {
 			}
 			const payload = new TokenPayloadDTO(user);
 			const tokens = tokenService.generateTokens(payload.toPlainObject());
-			db.saveToken(Number(user.id), tokens.refresh);
+			await db.saveToken(Number(user.id), tokens.refresh);
 			return { ...tokens, userData:payload };
 		} catch (e) {
 			throw e;

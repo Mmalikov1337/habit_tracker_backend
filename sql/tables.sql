@@ -13,8 +13,9 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `users_tokens` (
-  `user_id` int PRIMARY KEY NOT NULL,
-  `refreshToken` varchar(255) DEFAULT NULL,
+  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `refreshToken` TEXT DEFAULT NULL,
   
   FOREIGN KEY (user_id) REFERENCES users (id)
       ON DELETE CASCADE

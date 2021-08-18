@@ -8,11 +8,15 @@ class HabitController {
 	async getHabits(req: RequestExtended | Request, res: Response, next: NextFunction) {
 		//только привычки конкретного пользователя (одного, данные которого в поле userDataVerified)
 		try {
+			const habitId = req.params.id ? Number(req.params.id): undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 
-			const habitOptions: [{ value: string; option: string }] = req.body.habitOptions;
+			// const habitOptions: { value: string; option: string }[] = [
+			// 	{ value:habitId, option:"id"},
+			// 	// ...req.body.habitOptions as { value: string; option: string }[],
+			// ];
 
-			const dbHabits = await HabitService.getHabits(userDataVerified, habitOptions);
+			const dbHabits = await HabitService.getHabits(userDataVerified, habitId);
 
 			if (!dbHabits) {
 				throw ClientError.badRequest("Failed to get habits");

@@ -24,7 +24,7 @@ function authentificationHandler(
 		}
 		const userDataVerified = tokenService.verifyAccessToken(accessToken);
 		if (!userDataVerified) {
-			throw ClientError.notAuthorizated("Access token is not valid.");
+			throw ClientError.authenticationTimeout("Access token is not valid.");
 		}
 
 		(req as RequestExtended).userDataVerified = userDataVerified;

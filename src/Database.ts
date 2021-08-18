@@ -52,7 +52,7 @@ class Database {
 				await this.conn
 			).query("SELECT * FROM users WHERE email=? and password=?", [email, password]);
 			// console.log("userData", userData);
-				
+
 			return new UserDTO(userData[0]);
 		} catch (e) {
 			console.log(e.message, e.name);
@@ -76,7 +76,8 @@ class Database {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query("SELECT * FROM users_tokens WHERE user_id=?", [userId]); //получение токена по id юзера
-
+				// console.log("saveToken1",rows);
+				
 			if (rows[0]) {
 				// Если запись уже есть
 				const a: any = await (
@@ -88,6 +89,7 @@ class Database {
 				]);
 				return a[0].insertId;
 			}
+			// console.log("saveToken2",rows[0]);
 
 			const a: any = await (
 				await this.conn
@@ -95,8 +97,11 @@ class Database {
 				userId,
 				refreshToken,
 			]);
+			// console.log("saveToken3",a);
+			
 			return a[0].insertId;
 		} catch (e) {
+			console.log("db saveToken", e.message,e.name);
 			return -1;
 		}
 	}
@@ -130,16 +135,12 @@ class Database {
 		// console.log("ADDAASDASDASDASDASD", a, "___");
 	}
 
-	async getHabits(
-		userId: number,
-		preparedHabitOptions: { values: string; options: Array<string> } | null
-	): Promise<Array<HabitDTO>> {
+	async getHabits(userId: number, id?: number): Promise<Array<HabitDTO>> {
 		try {
-			const { values, options } = preparedHabitOptions ?? {};
-			const queryString = values
-				? `SELECT * FROM habits WHERE user_id=? ${values}`
+			const queryString = id
+				? `SELECT * FROM habits WHERE user_id=? id=?`
 				: `SELECT * FROM habits WHERE user_id=?`;
-			const queryOptions = options ? [userId, ...options] : [userId];
+			const queryOptions = id ? [userId, id] : [userId];
 
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn

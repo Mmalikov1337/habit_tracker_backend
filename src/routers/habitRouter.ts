@@ -6,6 +6,7 @@ import authorizationHandler from "../middlewares/authorizationHandler";
 const habit = express.Router();
 
 habit.get("/", authentificationHandler, authorizationHandler(1), HabitController.getHabits);
+habit.get("/:id", authentificationHandler, authorizationHandler(1), HabitController.getHabits);
 
 habit.post("/", authentificationHandler, authorizationHandler(1), HabitController.createHabit);
 
