@@ -76,8 +76,8 @@ class Database {
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query("SELECT * FROM users_tokens WHERE user_id=?", [userId]); //получение токена по id юзера
-				// console.log("saveToken1",rows);
-				
+			// console.log("saveToken1",rows);
+
 			if (rows[0]) {
 				// Если запись уже есть
 				const a: any = await (
@@ -98,10 +98,10 @@ class Database {
 				refreshToken,
 			]);
 			// console.log("saveToken3",a);
-			
+
 			return a[0].insertId;
 		} catch (e) {
-			console.log("db saveToken", e.message,e.name);
+			console.log("db saveToken", e.message, e.name);
 			return -1;
 		}
 	}
@@ -135,16 +135,23 @@ class Database {
 		// console.log("ADDAASDASDASDASDASD", a, "___");
 	}
 
-	async getHabits(userId: number, id?: number): Promise<Array<HabitDTO>> {
+	async getHabits(userId: number, id?: number, filterString?: string): Promise<Array<HabitDTO>> {
 		try {
 			const queryString = id
-				? `SELECT * FROM habits WHERE user_id=? id=?`
+				? `SELECT * FROM habits WHERE user_id=? AND id=?`
 				: `SELECT * FROM habits WHERE user_id=?`;
 			const queryOptions = id ? [userId, id] : [userId];
 
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query(queryString, queryOptions);
+			console.log(
+				"asdasdasdasd",
+				rows.map((it) => {
+					return new HabitDTO(it);
+				}),queryString
+			);
+
 			return rows.map((it) => {
 				return new HabitDTO(it);
 			});
@@ -164,11 +171,12 @@ class Database {
 				newHabit.is_healfully,
 				newHabit.value,
 				newHabit.photo,
+				new Date().toLocaleDateString(),
 			];
 			const a: any = await (
 				await this.conn
 			).execute(
-				"INSERT INTO habits (user_id,title,priority,difficulty,notes,is_healfully,value,photo) VALUES (?,?,?,?,?,?,?,?)",
+				"INSERT INTO habits (user_id,title,priority,difficulty,notes,is_healfully,value,photo, date) VALUES (?,?,?,?,?,?,?,?,?)",
 				params
 			);
 			return a[0].insertId;

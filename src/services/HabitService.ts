@@ -1,16 +1,21 @@
+import { FilterFields } from "./../types/queries";
 import ClientError from "../errors/ClientError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
 
 class HabitService {
-	async getHabits(userDataVerified: TokenPayloadDTO, id?: number) {
+	async getHabits(userDataVerified: TokenPayloadDTO, id?: number, filters?: any) {
 		try {
 			if (!userDataVerified.id) {
 				throw ClientError.badRequest("Wrong id getHabits");
 			}
 
-			return await db.getHabits(userDataVerified.id, id);
+			const filterString = Object.keys(filters)
+				.map((it) => `${it}=${filters[it]}`)
+				.join(" AND ");
+
+			return await db.getHabits(userDataVerified.id, id, filterString);
 		} catch (e) {
 			throw e;
 		}

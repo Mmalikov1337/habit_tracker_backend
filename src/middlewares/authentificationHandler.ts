@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ClientError from "../errors/ClientError";
-import RequestExtended from "../extended/ResponseExtended";
+import RequestExtended from "../types/ResponseExtended";
 import tokenService from "../services/tokenService";
 
 function authentificationHandler(

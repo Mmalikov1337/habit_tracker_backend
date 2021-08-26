@@ -24,7 +24,7 @@ class TokenService {
 		try {
 			const accessKey = config.ACCESS_TOKEN_KEY as string;
 			const refreshsKey = config.REFRESH_TOKEN_KEY as string;
-			const access = jwt.sign(data, accessKey, { expiresIn: "1m" });
+			const access = jwt.sign(data, accessKey, { expiresIn: "20s" });
 			const refresh = jwt.sign(data, refreshsKey, { expiresIn: "30d" });
 			return {
 				access,

@@ -44,7 +44,8 @@ class UserController {
 		try {
 			const refreshToken = req.cookies.refreshToken;
 			await userService.logoutUser(refreshToken);
-			return res.status(201).json({ message: "logged out" });
+			res.clearCookie("refreshToken")
+			return res.status(200).json({ message: "logged out" });
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
 		}

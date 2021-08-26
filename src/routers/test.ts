@@ -1,5 +1,5 @@
 import express, { NextFunction, Response, Request } from "express";
-import RequestExtended from "../extended/ResponseExtended";
+import RequestExtended from "../types/ResponseExtended";
 import authentificationHandler from "../middlewares/authentificationHandler";
 import authorizationHandler from "../middlewares/authorizationHandler";
 import db from "./../Database";

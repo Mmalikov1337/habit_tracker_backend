@@ -1,22 +1,19 @@
+import { FilterFields } from './../types/queries';
 import { NextFunction, Response, Request } from "express";
 import HabitDTO from "../DTO/HabitDTO";
 import ClientError from "../errors/ClientError";
-import RequestExtended from "../extended/ResponseExtended";
+import RequestExtended from "../types/ResponseExtended";
 import HabitService from "../services/HabitService";
 
 class HabitController {
 	async getHabits(req: RequestExtended | Request, res: Response, next: NextFunction) {
 		//только привычки конкретного пользователя (одного, данные которого в поле userDataVerified)
 		try {
-			const habitId = req.params.id ? Number(req.params.id): undefined;
+			const habitId = req.params.id ? Number(req.params.id) : undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
+			const filters = req.query
 
-			// const habitOptions: { value: string; option: string }[] = [
-			// 	{ value:habitId, option:"id"},
-			// 	// ...req.body.habitOptions as { value: string; option: string }[],
-			// ];
-
-			const dbHabits = await HabitService.getHabits(userDataVerified, habitId);
+			const dbHabits = await HabitService.getHabits(userDataVerified, habitId, filters);
 
 			if (!dbHabits) {
 				throw ClientError.badRequest("Failed to get habits");

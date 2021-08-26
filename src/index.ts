@@ -20,6 +20,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 	console.log("req.method", req.method);
 	console.log("req.cookies", req.cookies);
 	console.log("req.params", req.params);
+	console.log("req.query", req.query);
+	console.log("---");
+	
+	console.log("Object.keys(req.query)",Object.keys(req.query));
+	console.log("---");
+	
 	// console.log("req.headers", req.headers);
 	console.log("req.body", req.body);
 	return next()

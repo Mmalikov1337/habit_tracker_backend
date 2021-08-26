@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from "express";
 import ClientError from "../errors/ClientError";
-import RequestExtended from "../extended/ResponseExtended";
+import RequestExtended from "../types/ResponseExtended";
 import userService from "../services/userService";
 
 function authorizationHandler(permissionLevel: number) {

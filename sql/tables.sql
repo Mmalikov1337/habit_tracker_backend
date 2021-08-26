@@ -9,7 +9,7 @@ CREATE TABLE `users` (
   `permission_lvl` int DEFAULT 1,
   `photo` varchar(255) DEFAULT NULL,
   `is_mail_activated` BOOLEAN DEFAULT FALSE,
-  `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP
+  `date_of_create` DATE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `users_tokens` (
@@ -32,11 +32,20 @@ CREATE TABLE `habits` (
   `is_healfully` BOOLEAN DEFAULT FALSE,
   `value` int DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_of_create` DATE DEFAULT (CURRENT_DATE),
   FOREIGN KEY (user_id) REFERENCES users (id)
       ON DELETE CASCADE
       ON UPDATE CASCADE
 );
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (1,title, 10, 11,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (1,title, 111, 12,'[{"title":"zxc", "text":"text1"}]', TRUE, 100);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (1,title, 112, 14,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (1,title, 123, 15,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (2,title, 10, 11,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (2,title, 111, 12,'[{"title":"zxc", "text":"text1"}]', TRUE, 100);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (2,title, 112, 14,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
+INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (2,title, 123, 15,'[{"title":"zxc", "text":"text1"}]', FALSE, 10);
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -46,7 +55,7 @@ CREATE TABLE `tasks_global` (
   `difficulty` int DEFAULT NULL,
   `notes` json DEFAULT NULL,
   `value` int DEFAULT NULL,
-  `deadline` datetime DEFAULT NULL,
+  `deadline` DATETIME DEFAULT NULL,
   `is_complited` BOOLEAN DEFAULT FALSE,
 
    FOREIGN KEY (user_id) REFERENCES users (id)
@@ -60,9 +69,9 @@ CREATE TABLE `tasks` (
   `difficulty` int DEFAULT NULL,
   `notes` json DEFAULT NULL,
   `value` int DEFAULT NULL,
-  `date_of_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date_of_create` DATE DEFAULT CURRENT_TIMESTAMP,
   `global_task_id` int DEFAULT NULL,
-  `deadline` datetime DEFAULT NULL,
+  `deadline` DATETIME DEFAULT NULL,
   `is_complited` BOOLEAN DEFAULT FALSE,
 
    FOREIGN KEY (user_id) REFERENCES users (id),
