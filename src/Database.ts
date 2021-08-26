@@ -147,13 +147,13 @@ class Database {
 				: `SELECT * FROM habits WHERE user_id=? ${filterString ?? ""}`;
 			const queryOptions = id ? [userId, id] : filterValues ? [userId, ...filterValues] : [userId];
 			//Если передан id, то в массиве аргументов будет userId(id пользователя) и id(записи). Если id не передан, то был произведен запрос на все записи пользователя, значит id(записи не нужен). Далее, если передан filterValues(массив аргументов для фильтрации), в общий массив аргументов будет передан userId и аргументы для фильтрации.
-			console.log(
-				"asdasdasdasd",
+			// console.log(
+			// 	"asdasdasdasd",
 				
-				filterString,
-				queryString,
-				userId
-			);
+			// 	filterString,
+			// 	queryString,
+			// 	userId
+			// );
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query(queryString, queryOptions);

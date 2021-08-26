@@ -3,8 +3,9 @@ import ClientError from "../errors/ClientError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
-import getFilter from "../helpers/getFilter";
+import getFilterString from "../helpers/getFilterString";
 import isEmpty from "../helpers/isEmpty";
+import getFilterValue from "../helpers/getFilterValue";
 
 class HabitService {
 	async getHabits(userDataVerified: TokenPayloadDTO, id?: number, filters?: any) {
@@ -14,8 +15,10 @@ class HabitService {
 			}
 
 			if (!isEmpty(filters)) {
-				const filterString = "AND " + Object.keys(filters).map(getFilter).join(" AND "); // Формирование строки для фильтрации
-				const filterValues = Object.values(filters); //аргументы для фильтрации
+				const filterString = "AND " + Object.keys(filters).map(getFilterString).join(" AND "); // Формирование строки для фильтрации
+				const filterValues = Object.entries(filters).map((it) => getFilterValue(it[0], it[1])); //аргументы для фильтрации
+				// console.log("filterString, fv",filterString,filterValues);
+				
 				return await db.getHabits(userDataVerified.id, id, filterString, filterValues);
 			}
 			return await db.getHabits(userDataVerified.id, id);
