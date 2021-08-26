@@ -3,6 +3,8 @@ import ClientError from "../errors/ClientError";
 import db from "../Database";
 import TokenPayloadDTO from "../DTO/TokenPayloadDTO";
 import HabitDTO from "../DTO/HabitDTO";
+import getFilter from "../helpers/getFilter";
+import isEmpty from "../helpers/isEmpty";
 
 class HabitService {
 	async getHabits(userDataVerified: TokenPayloadDTO, id?: number, filters?: any) {
@@ -11,11 +13,12 @@ class HabitService {
 				throw ClientError.badRequest("Wrong id getHabits");
 			}
 
-			const filterString = Object.keys(filters)
-				.map((it) => `${it}=${filters[it]}`)
-				.join(" AND ");
-
-			return await db.getHabits(userDataVerified.id, id, filterString);
+			if (!isEmpty(filters)) {
+				const filterString = "AND " + Object.keys(filters).map(getFilter).join(" AND "); // Формирование строки для фильтрации
+				const filterValues = Object.values(filters); //аргументы для фильтрации
+				return await db.getHabits(userDataVerified.id, id, filterString, filterValues);
+			}
+			return await db.getHabits(userDataVerified.id, id);
 		} catch (e) {
 			throw e;
 		}

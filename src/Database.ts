@@ -135,22 +135,37 @@ class Database {
 		// console.log("ADDAASDASDASDASDASD", a, "___");
 	}
 
-	async getHabits(userId: number, id?: number, filterString?: string): Promise<Array<HabitDTO>> {
+	async getHabits(
+		userId: number,
+		id?: number,
+		filterString?: string,
+		filterValues?: any[]
+	): Promise<Array<HabitDTO>> {
 		try {
 			const queryString = id
 				? `SELECT * FROM habits WHERE user_id=? AND id=?`
-				: `SELECT * FROM habits WHERE user_id=?`;
-			const queryOptions = id ? [userId, id] : [userId];
-
+				: `SELECT * FROM habits WHERE user_id=? ${filterString ?? ""}`;
+			const queryOptions = id ? [userId, id] : filterValues ? [userId, ...filterValues] : [userId];
+			//Если передан id, то в массиве аргументов будет userId(id пользователя) и id(записи). Если id не передан, то был произведен запрос на все записи пользователя, значит id(записи не нужен). Далее, если передан filterValues(массив аргументов для фильтрации), в общий массив аргументов будет передан userId и аргументы для фильтрации.
+			console.log(
+				"asdasdasdasd",
+				
+				filterString,
+				queryString,
+				userId
+			);
 			const [rows]: [mysql.RowDataPacket[], any] = await (
 				await this.conn
 			).query(queryString, queryOptions);
-			console.log(
-				"asdasdasdasd",
-				rows.map((it) => {
-					return new HabitDTO(it);
-				}),queryString
-			);
+			// console.log(
+			// 	"asdasdasdasd",
+			// 	rows.map((it) => {
+			// 		return new HabitDTO(it);
+			// 	}),
+			// 	filterString,
+			// 	queryString,
+			// 	userId
+			// );
 
 			return rows.map((it) => {
 				return new HabitDTO(it);
