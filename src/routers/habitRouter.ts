@@ -9,8 +9,9 @@ habit.get("/", authentificationHandler, authorizationHandler(1), HabitController
 habit.get("/:id", authentificationHandler, authorizationHandler(1), HabitController.getHabits);
 
 habit.post("/", authentificationHandler, authorizationHandler(1), HabitController.createHabit);
+habit.post("/:id", authentificationHandler, authorizationHandler(1), HabitController.createHabit);
 
-habit.put("/", authentificationHandler, authorizationHandler(1), HabitController.updateHabit);
+habit.put("/:id", authentificationHandler, authorizationHandler(1), HabitController.updateHabit);
 
 habit.delete("/", authentificationHandler, authorizationHandler(1), HabitController.deleteHabit);
 

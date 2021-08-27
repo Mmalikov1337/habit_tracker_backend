@@ -1,4 +1,4 @@
-import { FilterFields } from './../types/queries';
+import { FilterFields } from "./../types/queries";
 import { NextFunction, Response, Request } from "express";
 import HabitDTO from "../DTO/HabitDTO";
 import ClientError from "../errors/ClientError";
@@ -11,7 +11,7 @@ class HabitController {
 		try {
 			const habitId = req.params.id ? Number(req.params.id) : undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
-			const filters = req.query
+			const filters = req.query;
 
 			const dbHabits = await HabitService.getHabits(userDataVerified, habitId, filters);
 
@@ -25,12 +25,20 @@ class HabitController {
 	}
 	async createHabit(req: RequestExtended | Request, res: Response, next: NextFunction) {
 		try {
+			const habitId = req.params.id ? Number(req.params.id) : undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 			const newHabit: HabitDTO = new HabitDTO(req.body.habit);
 			if (!newHabit) {
 				throw ClientError.badRequest("Wrong habit.");
 			}
-			newHabit.user_id = userDataVerified.id;
+			if (newHabit.user_id !== userDataVerified.id) {
+				console.log(
+					"createHabit, newHabit.user_id !== userDataVerified.id",
+					newHabit.user_id,
+					userDataVerified.id
+				);
+				newHabit.user_id = userDataVerified.id;
+			}
 			const insertionId = await HabitService.createHabit(newHabit);
 			res.status(200).json({ id: insertionId });
 		} catch (e) {
@@ -39,17 +47,26 @@ class HabitController {
 	}
 	async updateHabit(req: RequestExtended | Request, res: Response, next: NextFunction) {
 		try {
+			const habitId = req.params.id ? Number(req.params.id) : undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
 			const newHabit: HabitDTO = new HabitDTO(req.body.habit);
 
 			if (!newHabit) {
 				throw ClientError.badRequest("Wrong habit.");
 			}
+			if (newHabit.user_id !== userDataVerified.id) {
+				console.log(
+					"updateHabit, newHabit.user_id !== userDataVerified.id",
+					newHabit.user_id,
+					userDataVerified.id
+				);
+				newHabit.user_id = userDataVerified.id;
+			}
 			const updationResult = await HabitService.updateHabit(newHabit, userDataVerified);
 			if (!updationResult) {
 				throw ClientError.badRequest("Habit updation error.");
 			}
-			res.status(200).json({ mesage: "OK" });
+			res.status(200).json(updationResult);
 		} catch (e) {
 			return next(ClientError.badRequest(e.message));
 		}

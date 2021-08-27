@@ -29,6 +29,7 @@ CREATE TABLE `habits` (
   `priority` int DEFAULT NULL,
   `difficulty` int DEFAULT NULL,
   `notes` json DEFAULT NULL,
+  `dynamics` json DEFAULT NULL,
   `is_healfully` BOOLEAN DEFAULT FALSE,
   `value` int DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
@@ -37,16 +38,17 @@ CREATE TABLE `habits` (
       ON DELETE CASCADE
       ON UPDATE CASCADE
 );
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (1,'title1', 10, 11,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-21");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (1,'title2', 111, 12,'[{"title":"zxc", "text":"text1"}]', TRUE, 100, "2021-08-21");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (1,'title3', 112, 14,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-22");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (1,'title4', 123, 15,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-23") ;
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value) VALUES (1,'title555', 1223, 150,'[{"title":"zxc", "text":"text1"}]', TRUE, 10) ;
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (1,'title1', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-21", "value":"1001"}]', FALSE, 10, "2021-08-21");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (1,'title2', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-22", "value":"1002"}]', TRUE, 100, "2021-08-21");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (1,'title3', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-23", "value":"1003"}]', FALSE, 10, "2021-08-22");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (1,'title4', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-24", "value":"1004"}]', FALSE, 10, "2021-08-23") ;
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value) VALUES (1,'title555', 1223, 150,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-25", "value":"1005"}]', TRUE, 10) ;
+ 
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title5', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title6', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title7', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title8', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
 
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (2,'title5', 10, 11,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-24");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (2,'title6', 111, 12,'[{"title":"zxc", "text":"text1"}]', TRUE, 100, "2021-08-24");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (2,'title7', 112, 14,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-25");
-INSERT INTO habits (user_id, title, priority, difficulty, notes, is_healfully, value, date_of_create) VALUES (2,'title8', 123, 15,'[{"title":"zxc", "text":"text1"}]', FALSE, 10, "2021-08-26");
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
