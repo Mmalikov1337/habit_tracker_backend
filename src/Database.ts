@@ -1,4 +1,3 @@
-import { Connection } from "mysql2/promise";
 import { Pool } from "mysql2/promise";
 // import dotenv from "dotenv";
 import UserDTO from "./DTO/UserDTO";
@@ -7,6 +6,7 @@ import config from "./config";
 import TokenPayloadDTO from "./DTO/TokenPayloadDTO";
 import HabitDTO from "./DTO/HabitDTO";
 import mysql from "mysql2";
+import getQueryString from "./helpers/getQueryString";
 
 class Database {
 	pool: Pool;
@@ -139,15 +139,18 @@ class Database {
 
 	async getHabits(
 		userId: number,
+		paginationString?: string,
+		paginationValues?: any[],
 		id?: number,
 		filterString?: string,
 		filterValues?: any[]
-	): Promise<Array<HabitDTO>> {
+	): Promise<{ total: number; habits: Array<HabitDTO> }> {
 		try {
-			const queryString = id
-				? `SELECT * FROM habits WHERE user_id=? AND id=?`
-				: `SELECT * FROM habits WHERE user_id=? ${filterString ?? ""}`;
-			const queryOptions = id ? [userId, id] : filterValues ? [userId, ...filterValues] : [userId];
+			// const queryString = id
+			// 	? `SELECT * FROM habits WHERE user_id=? AND id=?`
+			// 	: `SELECT * FROM habits WHERE user_id=? ${filterString ?? ""}`;
+
+			// const queryOptions = id ? [userId, id] : filterValues ? [userId, ...filterValues] : [userId];
 			//Если передан id, то в массиве аргументов будет userId(id пользователя) и id(записи). Если id не передан, то был произведен запрос на все записи пользователя, значит id(записи не нужен). Далее, если передан filterValues(массив аргументов для фильтрации), в общий массив аргументов будет передан userId и аргументы для фильтрации.
 			// console.log(
 			// 	"asdasdasdasd",
@@ -156,7 +159,26 @@ class Database {
 			// 	queryString,
 			// 	userId
 			// );
-			const [rows]: [mysql.RowDataPacket[], any] = await this.pool.query(queryString, queryOptions);
+			const [queryString, queryOptions] = getQueryString(
+				"habits",
+				userId,
+				id,
+				filterString,
+				filterValues,
+				paginationString,
+				paginationValues
+			);
+			const [rows]: [mysql.RowDataPacket[], any] = await this.pool.query(
+				queryString,
+				queryOptions
+			);
+			const [total]: [mysql.RowDataPacket[], any] = await this.pool.query(
+				"SELECT id FROM habits WHERE user_id=?",
+				[userId]
+			);
+
+			// console.log(">>>", rows, "=====================================", a, "<<<");
+
 			// console.log(
 			// 	"asdasdasdasd",
 			// 	rows.map((it) => {
@@ -167,9 +189,13 @@ class Database {
 			// 	userId
 			// );
 
-			return rows.map((it) => {
+			const preparedHabits = rows.map((it) => {
 				return new HabitDTO(it);
 			});
+			return {
+				total: total.length,
+				habits: preparedHabits,
+			};
 		} catch (e) {
 			console.log("db getHabits");
 			throw e;

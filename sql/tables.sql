@@ -49,6 +49,76 @@ INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_he
 INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title7', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
 INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title8', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
 
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title9', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title10', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title11', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title12', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title13', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title14', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title15', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title16', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title17', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title18', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title19', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title20', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title21', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title22', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title23', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title24', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title25', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title26', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title27', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title28', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title29', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title30', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title31', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title32', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title33', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title34', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title35', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title36', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title37', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title38', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title39', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title40', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title41', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title42', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title43', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title44', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title45', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title46', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title47', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title48', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title49', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title50', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title51', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title52', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title53', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title54', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title55', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title56', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title57', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title58', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title59', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title60', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title61', 10, 11,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-26", "value":"1006"}]', FALSE, 10, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title62', 111, 12,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-27", "value":"1007"}]', TRUE, 100, "2021-08-24");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title63', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title64', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
+
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,

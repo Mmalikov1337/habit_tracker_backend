@@ -6,22 +6,29 @@ import HabitDTO from "../DTO/HabitDTO";
 import getFilterString from "../helpers/getFilterString";
 import isEmpty from "../helpers/isEmpty";
 import getFilterValue from "../helpers/getFilterValue";
+import createFilterValue from "../helpers/createFilterValues";
+import createFilterString from "../helpers/createFilterString";
 
 class HabitService {
-	async getHabits(userDataVerified: TokenPayloadDTO, id?: number, filters?: any) {
+	async getHabits(userDataVerified: TokenPayloadDTO, id?: number, filters?: any, pagination?: any) {
 		try {
 			if (!userDataVerified.id) {
 				throw ClientError.badRequest("Wrong id getHabits");
 			}
+			const filterString = createFilterString(filters);
+			const filterValues = createFilterValue(filters);
+			const paginationString = pagination ? `LIMIT ? OFFSET ?` : undefined;
+			console.log("pagination", pagination);
+			const paginationValues = pagination ? [pagination.limit, pagination.offset] : undefined;
 
-			if (!isEmpty(filters)) {
-				const filterString = "AND " + Object.keys(filters).map(getFilterString).join(" AND "); // Формирование строки для фильтрации
-				const filterValues = Object.entries(filters).map((it) => getFilterValue(it[0], it[1])); //аргументы для фильтрации
-				// console.log("filterString, fv",filterString,filterValues);
-				
-				return await db.getHabits(userDataVerified.id, id, filterString, filterValues);
-			}
-			return await db.getHabits(userDataVerified.id, id);
+			return await db.getHabits(
+				userDataVerified.id,
+				paginationString,
+				paginationValues,
+				id,
+				filterString,
+				filterValues
+			);
 		} catch (e) {
 			throw e;
 		}

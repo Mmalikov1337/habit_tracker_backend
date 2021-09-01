@@ -4,6 +4,7 @@ import HabitDTO from "../DTO/HabitDTO";
 import ClientError from "../errors/ClientError";
 import RequestExtended from "../types/ResponseExtended";
 import HabitService from "../services/HabitService";
+import prepareQueryData from "../helpers/prepareQueryData";
 
 class HabitController {
 	async getHabits(req: RequestExtended | Request, res: Response, next: NextFunction) {
@@ -11,9 +12,15 @@ class HabitController {
 		try {
 			const habitId = req.params.id ? Number(req.params.id) : undefined;
 			const userDataVerified = (req as RequestExtended).userDataVerified;
-			const filters = req.query;
+			const { filterData, paginationData } = prepareQueryData(req.query);
+			console.log("filterData, paginationData", filterData, paginationData, "<<<");
 
-			const dbHabits = await HabitService.getHabits(userDataVerified, habitId, filters);
+			const dbHabits = await HabitService.getHabits(
+				userDataVerified,
+				habitId,
+				filterData,
+				paginationData
+			);
 
 			if (!dbHabits) {
 				throw ClientError.badRequest("Failed to get habits");
