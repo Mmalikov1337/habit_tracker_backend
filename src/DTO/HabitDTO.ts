@@ -5,6 +5,7 @@ class HabitDTO {
 	priority: number | null;
 	difficulty: number | null;
 	notes: string | null;
+	dynamics: string | null;
 	is_healfully: boolean | null;
 	value: number | null;
 	photo: string | null;
@@ -17,6 +18,7 @@ class HabitDTO {
 		this.priority = dbObject.priority ?? null;
 		this.difficulty = dbObject.difficulty ?? null;
 		this.notes = dbObject.notes ?? null;
+		this.dynamics = dbObject.dynamics ?? null;
 		this.is_healfully = dbObject.is_healfully ?? null;
 		this.value = dbObject.value ?? null;
 		this.photo = dbObject.photo ?? null;

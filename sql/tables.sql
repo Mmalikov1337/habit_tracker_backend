@@ -119,6 +119,12 @@ INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_he
 INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title63', 112, 14,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-28", "value":"1008"}]', FALSE, 10, "2021-08-25");
 INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title64', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-08-29", "value":"1009"}]', FALSE, 10, "2021-08-26");
 
+
+
+INSERT INTO habits (user_id, title, priority, difficulty, notes, dynamics, is_healfully, value, date_of_create) VALUES (2,'title65', 123, 15,'[{"title":"zxc", "text":"text1"}]','[{"date":"2021-07-29","value":"1009"},{"date":"2021-07-30","value":"1009"},{"date":"2021-07-31","value":"1009"},{"date":"2021-08-15","value":"1009"},{"date":"2021-08-16","value":"1009"},{"date":"2021-08-20","value":"1009"},{"date":"2021-08-1","value":"1009"},{"date":"2021-08-31","value":"1009"}]', FALSE, 10, "2021-08-26");
+
+
+
 CREATE TABLE `tasks_global` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
